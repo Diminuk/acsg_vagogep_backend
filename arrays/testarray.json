@@ -1,0 +1,1 @@
+{"id": "", "name": "testarray", "elements": [{"number": 1, "length": "80", "cutDelay": "0100", "speed": "7", "acc": "8", "dec": "8", "infPercent": "50", "infDelay": "10", "count": "3", "ph": 0}, {"number": 2, "length": "0200", "cutDelay": "100", "speed": "10", "acc": "10", "dec": "9", "infPercent": "40", "infDelay": "10", "count": "05", "ph": 0}]}

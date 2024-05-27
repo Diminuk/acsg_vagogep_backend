@@ -1,0 +1,1 @@
+{"username": "spddfg", "password": "d4b2758da0205c1e0aa9512cd188002a", "type": "operator"}

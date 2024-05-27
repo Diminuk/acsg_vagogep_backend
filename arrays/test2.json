@@ -1,0 +1,1 @@
+{"id": "", "name": "test2", "elements": [{"number": 1, "length": "02", "cutDelay": "02", "speed": 1, "acc": 1, "dec": 1, "infPercent": "02", "infDelay": "02", "count": "02", "ph": 0}, {"number": 2, "length": "01", "cutDelay": "01", "speed": "11", "acc": 1, "dec": 1, "infPercent": "01", "infDelay": "01", "count": "01", "ph": 0}]}
