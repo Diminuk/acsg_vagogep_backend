@@ -65,7 +65,7 @@ class infra:
                 self.driver.write_register(10,0)
             else:
                 self.driver.write_register(10,value)
-            #self.driver.serial.close() # -> uncomment if error happens
+            self.driver.serial.close() # -> uncomment if error happens
         except:
             print("error with infra")
         return True

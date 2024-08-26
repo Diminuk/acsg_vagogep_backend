@@ -161,7 +161,11 @@ class relay:
     def read_input(self):
         status = self.send_command(READ_INPUT)
         #print(status)
-        inputs = status[3]
-        bits = [int(bit) for bit in bin(inputs)[2:].zfill(8)]
-        bits.reverse()
+        try:
+            inputs = status[3]
+            bits = [int(bit) for bit in bin(inputs)[2:].zfill(8)]
+            bits.reverse()
+        except:
+            print("Error during read - trying again")
+            self.read_input()
         return bits

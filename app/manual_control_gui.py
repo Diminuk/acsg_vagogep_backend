@@ -199,6 +199,8 @@ def reset_current_array():
 def nullcut():
     backend_variables.websocket_payload['wait_nullcut_approve'] = True
     backend_variables.websocket_payload['null_cut'] = True
+    if not backend_variables.TESTING:
+        backend_variables.myrelay.turn_on_relay(0)
     return {"message":'OK'}
 
 @router.post("/api/preheat")
