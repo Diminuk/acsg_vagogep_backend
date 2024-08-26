@@ -44,23 +44,29 @@ class infra:
     def turn_infra(self,value: bool):
         if self.driver is None: 
             print("Driver is not initialized")
-            return False 
-        if value:
-            self.driver.write_register(100,1)
-        else:
-            self.driver.write_register(100,0)
+            return False
+        try: 
+            if value:
+                self.driver.write_register(100,1)
+            else:
+                self.driver.write_register(100,0)
+        except:
+            print("error with infra")
         return True
 
     def config_percentage(self,value: int):
         if self.driver is None: 
             print("Driver is not initialized")
             return False 
-        if(value >= 92):
-            self.driver.write_register(10,92)
-        elif value <= 0:
-            self.driver.write_register(10,0)
-        else:
-            self.driver.write_register(10,value)
-        self.driver.serial.close()
+        try:
+            if(value >= 92):
+                self.driver.write_register(10,92)
+            elif value <= 0:
+                self.driver.write_register(10,0)
+            else:
+                self.driver.write_register(10,value)
+            #self.driver.serial.close() # -> uncomment if error happens
+        except:
+            print("error with infra")
         return True
 
