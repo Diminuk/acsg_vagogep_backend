@@ -1,0 +1,1 @@
+{"name": "newtest", "elements": [{"number": 1, "length": "02", "cutDelay": "02", "speed": 1, "acc": 1, "dec": 1, "infPercent": "02", "infDelay": "02", "count": "5", "ph": 0}, {"number": 2, "length": 1, "cutDelay": 300, "speed": 1, "acc": 1, "dec": 1, "infPercent": 1, "infDelay": 1, "count": 1, "ph": 1}]}

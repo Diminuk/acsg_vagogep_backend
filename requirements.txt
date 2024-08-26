@@ -1,0 +1,8 @@
+asyncio
+numpy
+fastapi
+minimalmodbus
+uvicorn
+pyserial
+python-statemachine
+transitions

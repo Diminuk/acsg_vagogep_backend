@@ -1,23 +1,27 @@
-# Use an official Python runtime as a parent image
-FROM arm64v8/python:3
+# Use the official Python 3.9 slim image as the base
+FROM python:3.9-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
+# Install the necessary Python dependencies
+RUN pip install --no-cache-dir \
+    fastapi \
+    uvicorn \
+    asyncio \
+    numpy \
+    minimalmodbus \
+    pyserial \
+    python-statemachine \
+    transitions \
+    websockets \
+    httpx
+
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY . .
 
-# Install any needed dependencies specified in requirements.txt
-# RUN pip install --no-cache-dir -r requirements.txt
+# Expose the port the app runs on
+EXPOSE 8000
 
-RUN pip install asyncio
-RUN pip install numpy
-RUN pip install fastapi
-RUN pip install minimalmodbus
-RUN pip install uvicorn
-RUN pip install pyserial
-RUN pip install python-statemachine
-RUN pip install transitions
-
-# Run app.py when the container launches
-CMD ["python", "reterminal_backend_v_1_1.py"]
+# Command to run the application
+CMD ["python", "app/reterminal_backend_v_1_1.py"]
