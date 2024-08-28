@@ -294,27 +294,30 @@ async def reconnect():
 # --------- SAFETY EVENT ------------
 async def safety_monitor():
     while True:
-        if not backend_variables.TESTING:
-            if(backend_variables.myrelay.read_input()[1] == 1): # emergency stop 
-                print("Emergency stop!")
-                backend_variables.websocket_payload["door"] = False
-                if(backend_variables.websocket_payload['process_running']):
-                    backend_variables.websocket_payload['process_stopped_imm'] = True
-                    backend_variables.myinfra.turn_infra(False)
-                    backend_variables.myservo.stop_path()
-                    backend_variables.myrelay.turn_off_relay(0)
-                    backend_variables.myrelay.turn_off_relay(2)
-                    backend_variables.myrelay.turn_off_relay(3)
-                    backend_variables.myrelay.turn_on_relay(3)
-                    backend_variables.myrelay.turn_off_relay(3)
+        try:
+            if not backend_variables.TESTING:
+                if(backend_variables.myrelay.read_input()[1] == 1): # emergency stop 
+                    print("Emergency stop!")
+                    backend_variables.websocket_payload["door"] = False
+                    if(backend_variables.websocket_payload['process_running']):
+                        backend_variables.websocket_payload['process_stopped_imm'] = True
+                        backend_variables.myinfra.turn_infra(False)
+                        backend_variables.myservo.stop_path()
+                        backend_variables.myrelay.turn_off_relay(0)
+                        backend_variables.myrelay.turn_off_relay(2)
+                        backend_variables.myrelay.turn_off_relay(3)
+                        backend_variables.myrelay.turn_on_relay(3)
+                        backend_variables.myrelay.turn_off_relay(3)
+                else:
+                    backend_variables.websocket_payload["door"] = True
             else:
-                backend_variables.websocket_payload["door"] = True
-        else:
-            if(backend_variables.test_variables["emergency_stop"] == False):
-                 if(backend_variables.websocket_payload['process_running']):
-                     print("Stopping process - emergency")
-                     backend_variables.websocket_payload['process_stopped_imm'] = True
-        # todo implement
+                if(backend_variables.test_variables["emergency_stop"] == False):
+                    if(backend_variables.websocket_payload['process_running']):
+                        print("Stopping process - emergency")
+                        backend_variables.websocket_payload['process_stopped_imm'] = True
+            # todo implement
+        except:
+            print("Some error occured during safety monitor")
         await asyncio.sleep(0.1)
 
 
