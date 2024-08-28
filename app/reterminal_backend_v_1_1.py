@@ -206,24 +206,24 @@ def update_process(data: dict):
 @app.post("/api/update/operatorprocess")
 def update_operator_process(data: dict):
     if 'Spd' in data:
-        backend_variables.state["array_spd_modifier"] = data['Spd']
-        tmp = backend_variables.state["array_spd_modifier"]
+        backend_variables.websocket_payload["array_spd_modifier"] = data['Spd']
+        tmp = backend_variables.websocket_payload["array_spd_modifier"]
         print(f"Operator Spd changed to: {tmp}")
     if 'Acc' in data:
-        backend_variables.state["array_acc_modifier"] = data['Acc']
-        tmp = backend_variables.state["array_acc_modifier"]
+        backend_variables.websocket_payload["array_acc_modifier"] = data['Acc']
+        tmp = backend_variables.websocket_payload["array_acc_modifier"]
         print(f"Operator Acc changed to: {tmp}")
     if 'Dec' in data:
-        backend_variables.state["array_dec_modifier"] = data['Dec']
-        tmp = backend_variables.state["array_dec_modifier"]
+        backend_variables.websocket_payload["array_dec_modifier"] = data['Dec']
+        tmp = backend_variables.websocket_payload["array_dec_modifier"]
         print(f"Operator Dec changed to: {tmp}")
     if 'Infp' in data:
-        backend_variables.state["array_infpercent_modifier"] = data['Infp']
-        tmp = backend_variables.state["array_infpercent_modifier"]
+        backend_variables.websocket_payload["array_infpercent_modifier"] = data['Infp']
+        tmp = backend_variables.websocket_payload["array_infpercent_modifier"]
         print(f"Operator Infp changed to: {tmp}")
     if 'Infd' in data:
-        backend_variables.state["array_infdelay_modifier"] = data['Infd']
-        tmp = backend_variables.state["array_infdelay_modifier"]
+        backend_variables.websocket_payload["array_infdelay_modifier"] = data['Infd']
+        tmp = backend_variables.websocket_payload["array_infdelay_modifier"]
         print(f"Operator Infd changed to: {tmp}")
     return {"message": "Success"}
 

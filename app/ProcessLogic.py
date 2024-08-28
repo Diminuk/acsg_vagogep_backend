@@ -94,6 +94,8 @@ async def cut_process(spd_num,
             if modified_infra_percent >= 95 : modified_infra_percent = 95
             if modified_infra_percent <= 1 : modified_infra_percent = 1
             backend_variables.myinfra.config_percentage(modified_infra_percent)
+            print(f"Preset infra percentage: {infra_percent}")
+            print(f"Modified infra percentage: {modified_infra_percent}")
         await asyncio.sleep(0.2)
         time_array = np.append(time_array, time.time())
         print(f"Infra: {infra_percent}")
@@ -112,7 +114,7 @@ async def cut_process(spd_num,
     #if backend_variables.websocket_payload["process_stopped_imm"]:
     #    print("Process stopped immidietly")
     #    return None
-
+ # 37.33
     # knife up
     backend_variables.websocket_payload['process_status'] = "knifeup_first"
     if not backend_variables.TESTING:
