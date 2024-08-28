@@ -184,13 +184,20 @@ class servo:
             print("Path number exceeds limit")
 
     def stop_path(self):
-        self.driver.write_register(int("0x050e",16),1000)
-        print("Path stopped")
+        try:
+            self.driver.write_register(int("0x050e",16),1000)
+            print("Path stopped")
+        except:
+            print("Cannot reach servo")
 
     def get_do_status(self):
-        status = self.driver.read_registers(int("0x0412",16),1,3) # 1542 -->> P6.003
-        binary_representation = bin(status[0])[2:].zfill(6)
-        return binary_representation
+        try:
+            status = self.driver.read_registers(int("0x0412",16),1,3) # 1542 -->> P6.003
+            binary_representation = bin(status[0])[2:].zfill(6)
+            return binary_representation
+        except:
+            print("Cannot reach servo")
+            return -1
     
     def poll_eop(self):
         return self.get_do_status()[2]
