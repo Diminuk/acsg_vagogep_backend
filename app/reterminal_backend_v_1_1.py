@@ -218,7 +218,7 @@ def update_operator_process(data: dict):
         tmp = backend_variables.websocket_payload["array_dec_modifier"]
         print(f"Operator Dec changed to: {tmp}")
     if 'Infp' in data:
-        backend_variables.websocket_payload["array_infpercent_modifier"] = data['Infp']
+        backend_variables.websocket_payload["array_infpercent_modifier"] = data['Infp'] * 10
         tmp = backend_variables.websocket_payload["array_infpercent_modifier"]
         print(f"Operator Infp changed to: {tmp}")
     if 'Infd' in data:
@@ -357,7 +357,29 @@ async def shutdown_event():
     # turn off everything
     # ...
     # log off 
+    pass
+    
+
+@app.post("/api/shutdown")
+def shutdown():
     file_api.log("OFF",None)
+    if not backend_variables.TESTING:
+        try:
+            backend_variables.myrelay.turn_off_relay(3)
+            backend_variables.myrelay.turn_off_relay(2)
+            backend_variables.myrelay.turn_on_relay(3)
+            time.sleep(0.5)
+            backend_variables.myrelay.turn_off_relay(3)
+        except:
+            print("Error with relay communication during shutdown")
+        try:
+            backend_variables.myinfra.turn_infra(False)
+            backend_variables.myservo.stop_path()
+            backend_variables.myrelay.turn_off_relay(0)
+        except:
+            print("Error with stop processes communication during shutdown")
+
+    os.system('sudo shutdown -h now')
 
 # ------------------- end of on_event functions ----------------------
     

@@ -151,10 +151,6 @@ async def reset_batch(data: dict):
                 backend_variables.myrelay.turn_off_relay(2)
                 await asyncio.sleep(0.1)
                 # check if conveyor really started 
-                print(backend_variables.myrelay.read_input())
-                if backend_variables.myrelay.read_input()[2] ==0 or backend_variables.myrelay.read_input()[4] != 0:
-                    backend_variables.websocket_payload["conveyor"] = False
-                    print("Problem starting conveyor")
             return {"message":"conveyor started"} 
         else:
             # stop belt
@@ -166,10 +162,6 @@ async def reset_batch(data: dict):
                 await asyncio.sleep(0.5)
                 backend_variables.myrelay.turn_off_relay(3)
                 await asyncio.sleep(0.1)
-                print(backend_variables.myrelay.read_input())
-                if backend_variables.myrelay.read_input()[2] !=0 or backend_variables.myrelay.read_input()[4] == 0:
-                    backend_variables.websocket_payload["conveyor"] = True
-                    print("Problem stopping conveyor")
             return {"message":"conveyor stopped"} 
     else:
         raise HTTPException(status_code=400, detail="Incorrect POST parameters")
