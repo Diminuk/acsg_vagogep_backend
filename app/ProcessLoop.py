@@ -279,6 +279,11 @@ async def ProcessLoop():
             first_after_continue = True
 
             for element in backend_variables.current_process_array["elements"]:
+                if backend_variables.websocket_payload["process_stopped_after"]:
+                    print("Stopping process because of STOP_AFTER")
+                    file_comp.log(type='ERROR',
+                                message="Stop-immediately")
+                    break
                 print("Next element:")
                 print(element)
                 if element is None:
@@ -307,6 +312,11 @@ async def ProcessLoop():
                 print(f"Count in currently processed element: {num_count}")
 
                 for i in range(num_count):
+                    if backend_variables.websocket_payload["process_stopped_after"]:
+                        print("Stopping process because of STOP_AFTER")
+                        file_comp.log(type='ERROR',
+                                    message="Stop-after")
+                        break
                     if backend_variables.websocket_payload['process_stopped_imm'] or backend_variables.websocket_payload['process_stopped_after']:
                         print("Break outer loop cause of stop")
                         break
