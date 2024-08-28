@@ -167,5 +167,5 @@ class relay:
             bits.reverse()
         except:
             print("Error during read - trying again")
-            self.read_input()
+            return self.read_input()
         return bits
