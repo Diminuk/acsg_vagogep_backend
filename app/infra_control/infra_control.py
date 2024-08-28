@@ -28,7 +28,7 @@ class infra:
         self.connected = False
     def begin(self,):
         try:
-            self.driver = bus.Instrument(self.PORT, 105, mode=bus.MODE_RTU)
+            self.driver = bus.Instrument(self.PORT, 1, mode=bus.MODE_RTU)
             self.driver.serial.baudrate  = self.baudrate
             self.driver.serial.bytesize  = self.bytesize
             self.driver.serial.parity    = self.parity
