@@ -495,6 +495,7 @@ async def ProcessLoop():
     backend_variables.websocket_payload["process_paused"] = False
     backend_variables.websocket_payload["process_stopped_imm"] = False
     backend_variables.websocket_payload["process_stopped_after"] = False
+    backend_variables.websocket_payload["infra"] = False
     backend_variables.state['approve_manual_jump'] = False,
     backend_variables.state['manual_jump_good'] = False
     

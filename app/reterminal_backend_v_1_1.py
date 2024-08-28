@@ -234,6 +234,7 @@ async def sensor_read():
     while True:
         try:
             sensor_array = backend_variables.myrelay.read_input()
+            print(sensor_array)
             if sensor_array[-1] == 0:
                 backend_variables.websocket_payload['cut_up'] = True
             else:
@@ -247,6 +248,10 @@ async def sensor_read():
                 backend_variables.websocket_payload['null_cut'] = False
             else:
                 backend_variables.websocket_payload['mat_begin'] = True
+            if sensor_array[2] == 0 or sensor_array[3] == 0 or sensor_array[4] == 1:
+                backend_variables.websocket_payload["conveyor"] = False
+            elif sensor_array[4] == 0:
+                backend_variables.websocket_payload['conveyor'] = True
             
             #print(f"Data from relaycard: {sensor_array}")
         except Exception as e:
