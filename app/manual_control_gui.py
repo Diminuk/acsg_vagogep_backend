@@ -149,6 +149,7 @@ async def reset_batch(data: dict):
                 backend_variables.myrelay.turn_on_relay(2)
                 await asyncio.sleep(0.5)
                 backend_variables.myrelay.turn_off_relay(2)
+                await asyncio.sleep(0.1)
                 # check if conveyor really started 
                 if backend_variables.myrelay.read_input()[2] ==0 or backend_variables.myrelay.read_input()[3] != 0:
                     backend_variables.websocket_payload["conveyor"] = False
@@ -163,6 +164,7 @@ async def reset_batch(data: dict):
                 backend_variables.myrelay.turn_on_relay(3)
                 await asyncio.sleep(0.5)
                 backend_variables.myrelay.turn_off_relay(3)
+                await asyncio.sleep(0.1)
                 if backend_variables.myrelay.read_input()[2] !=0 or backend_variables.myrelay.read_input()[3] == 0:
                     backend_variables.websocket_payload["conveyor"] = True
                     print("Problem stopping conveyor")
