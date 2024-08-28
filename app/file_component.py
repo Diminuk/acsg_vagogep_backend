@@ -49,8 +49,8 @@ def create_directories_if_not_exist(directories):
 async def login(data: dict):
     if "username" in data and "password" in data:
         username = data['username']
-        if os.path.exists(f"./users/{username}.txt"):
-            with open(f"./users/{username}.txt","r") as file:
+        if os.path.exists(f"/data/users/{username}.txt"):
+            with open(f"/data/users/{username}.txt","r") as file:
                 userdata = json.load(file)
                 if "username" in userdata and "password" in userdata and "type" in userdata:
                     if userdata["username"] != data["username"]:
@@ -74,8 +74,8 @@ async def login(data: dict):
         return [False, None]
 
 def delete_userfile(username: str):
-    if os.path.exists(f"./users/{username}.txt"):
-        os.remove(f"./users/{username}.txt") 
+    if os.path.exists(f"/data/users/{username}.txt"):
+        os.remove(f"/data/users/{username}.txt") 
         return {"message":"User deleted successfully"}
     else:
         return {"message":"ERROR\nNon-existing user"}
@@ -83,10 +83,10 @@ def delete_userfile(username: str):
 def create_user(username: str,
                 password: str,
                 type: str):
-    if os.path.exists(f"./users/{username}.txt"):
+    if os.path.exists(f"/data/users/{username}.txt"):
         return {"message": "ERROR\nUsername already taken"}
     else:
-        with open(f"./users/{username}.txt","w") as file:
+        with open(f"/data/users/{username}.txt","w") as file:
             json.dump({"username":username,
                        "password":hashlib.md5(password.encode()).hexdigest(),
                        "type":type
@@ -94,9 +94,9 @@ def create_user(username: str,
         file.close()
         return {"message":"User created successfully"}
 directories = [
-    "./users",
-    "./log",
-    "./arrays"
+    "/data/users",
+    "/data/log",
+    "/data/arrays"
 ]
 async def init_filesystem():
     # init dicts and files if not found
@@ -104,26 +104,26 @@ async def init_filesystem():
     print("File system init done")
 
 async def save_state():
-    with open("./state", 'w') as json_file:
+    with open("/data/state", 'w') as json_file:
         json.dump(backend_variables.state, json_file)
         print("state saved to file")
 
 async def load_state():
     try:
-        with open("./state", 'r') as json_file:
+        with open("/data/state", 'r') as json_file:
             data = json.load(json_file)
             backend_variables.state['path_param'] = data['path_param']
     except:
         print("Missing file")
 
 async def get_local_processes():
-    return list_files_in_directory("./arrays/")
+    return list_files_in_directory("/data/arrays/")
 
 async def load_local_process(filename):
     return load_json_file(filename)
 
 async def load_history_filename():
-    return list_files_in_directory("./log/")
+    return list_files_in_directory("/data/log/")
 
 async def load_history(filename):
     return load_json_file(filename)
@@ -184,14 +184,14 @@ async def log(type,
             "type": "LOGIN",
             "user": message['username'],
         }
-        write_json_to_file(f"./log/{filename}",json_msg )
+        write_json_to_file(f"/data/log/{filename}",json_msg )
         return
     elif type == "ON":
         json_msg = {
             "date": date,
             "type": "ON",
         }
-        write_json_to_file(f"./log/{filename}",json_msg )
+        write_json_to_file(f"/data/log/{filename}",json_msg )
         return
 
     elif type == "OFF":
@@ -199,7 +199,7 @@ async def log(type,
             "date": date,
             "type": "OFF",
         }
-        write_json_to_file(f"./log/{filename}",json_msg)
+        write_json_to_file(f"/data/log/{filename}",json_msg)
         return
 
     elif type == "SINGLE":
@@ -209,7 +209,7 @@ async def log(type,
             "data": message,
             "user":backend_variables.state["username"]
         }
-        write_json_to_file(f"./log/{filename}",json_msg)
+        write_json_to_file(f"/data/log/{filename}",json_msg)
         return
 
     elif type == "ARRAY":
@@ -219,7 +219,7 @@ async def log(type,
             "data": message,
             "user":backend_variables.state["username"]
         }
-        write_json_to_file(f"./log/{filename}",json_msg)
+        write_json_to_file(f"/data/log/{filename}",json_msg)
         return
 
     elif type == "ERROR":
@@ -229,7 +229,7 @@ async def log(type,
             "cause": message,
             "user":backend_variables.state["username"]
         }
-        write_json_to_file(f"./log/{filename}",json_msg)
+        write_json_to_file(f"/data/log/{filename}",json_msg)
         return
     
     else:
@@ -243,7 +243,7 @@ async def log(type,
 async def get_day_log(date: str):
     if not date:
         return JSONResponse(content={"data": {}})
-    data = load_json_file(f"./log/{date}.txt")
+    data = load_json_file(f"/data/log/{date}.txt")
     if data is None:
         return JSONResponse(content={"data": {}})
         
@@ -251,7 +251,7 @@ async def get_day_log(date: str):
 
 @router.get('/api/get_log_days')
 async def get_log_days():
-    filenames = list_files_in_directory("./log")
+    filenames = list_files_in_directory("/data/log")
     if filenames is None:
         raise HTTPException(status_code=400, detail="Error during loading dates")
     data = []
@@ -265,7 +265,7 @@ class ExportLogRequest(BaseModel):
     startdate: datetime.datetime
     enddate: datetime.datetime
 
-LOG_DIR = 'log'  # Directory where log files are stored
+LOG_DIR = '/data/log'  # Directory where log files are stored
 
 @router.post('/api/export')
 async def export_log(data: ExportLogRequest):
